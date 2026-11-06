@@ -50,25 +50,24 @@ export default function Contact() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch font-mono">
         <div className="flex flex-col">
           <p className="text-xs text-[#6b747c] mb-2">interactive terminal, try <span className="text-white font-semibold">help</span></p>
-          <div className="flex-1 relative">
+          <div className="flex-1">
             <Terminal />
-            {/* floating mascot — mirrors the friend's portfolio cat */}
-            <motion.div
-              className="absolute -bottom-6 -left-4 z-10 group cursor-default select-none"
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-            >
-              <div className="relative">
-                {/* tooltip */}
-                <div className="absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#0b0d0f] border border-[#1c2126] rounded-full px-3 py-1 text-[11px] text-[#d6dadd] font-mono opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                  ooh — say hi to Ankit here
-                </div>
-                <div className="w-14 h-14 rounded-2xl bg-[#0b0d0f] border border-[#1c2126] flex items-center justify-center text-3xl shadow-lg shadow-black/40">
-                  🧑‍💻
-                </div>
-              </div>
-            </motion.div>
           </div>
+          {/* floating mascot — mirrors the friend's portfolio cat */}
+          <motion.div
+            className="mt-4 self-start group cursor-default select-none"
+            animate={{ y: [0, -6, 0] }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <div className="relative inline-block">
+              <div className="absolute -top-10 left-1/2 -translate-x-1/2 whitespace-nowrap bg-[#0b0d0f] border border-[#1c2126] rounded-full px-3 py-1 text-[11px] text-[#d6dadd] font-mono opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none">
+                ooh — say hi to Ankit here
+              </div>
+              <div className="w-14 h-14 rounded-2xl bg-[#0b0d0f] border border-[#1c2126] flex items-center justify-center text-3xl shadow-lg shadow-black/40">
+                🧑‍💻
+              </div>
+            </div>
+          </motion.div>
         </div>
 
         <div className="flex flex-col">
