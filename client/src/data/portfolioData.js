@@ -1,18 +1,30 @@
 export const portfolioData = {
   personal: {
     name: "Ankit Rana",
-    title: "Full Stack Developer & DSA Specialist",
+    title: "Full Stack Developer",
     email: "ankitrana210704@gmail.com",
     phone: "+91 8814073730",
-    location: "Delhi NCR, India",
+    location: "Haryana, India",
     roles: [
+      "Software Development Engineer",
       "Full Stack Developer",
-      "MERN Stack Engineer",
-      "DSA Problem Solver",
-      "Backend Architect"
+      "AI SaaS Builder",
+      "DSA Problem Solver"
     ],
-    summary: "Computer Science undergraduate with expertise in Java, Data Structures & Algorithms, and MERN stack development. Solved 1500+ DSA problems across LeetCode and GeeksforGeeks. Experienced in building scalable full-stack applications using React.js, Node.js, Express.js, MongoDB, REST APIs, and JWT authentication."
+    tagline: "Final-year CS undergrad shipping production MERN apps. Scroll, and watch the pipeline run from first commit to deploy.",
+    summary: "Final-year CS undergraduate (CGPA 9.20) with 1500+ DSA problems solved (LeetCode peak rating 1860) and hands-on full-stack experience from a 3-month internship. Built and shipped production MERN web applications with authentication, real-time features and third-party integrations. Seeking Software Development Engineer roles."
   },
+
+  // Page order. Drives the pipeline rail, stage numbers and the footer count.
+  stages: [
+    { id: "about", name: "init" },
+    { id: "activity", name: "commit" },
+    { id: "experience", name: "branch" },
+    { id: "skills", name: "build" },
+    { id: "projects", name: "ship" },
+    { id: "log", name: "log" },
+    { id: "contact", name: "connect" }
+  ],
 
   stats: [
     { label: "DSA Problems Solved", value: 1500, suffix: "+" },
@@ -22,36 +34,12 @@ export const portfolioData = {
   ],
 
   skills: [
-    {
-      category: "Languages",
-      icon: "Code2",
-      items: ["Java", "JavaScript", "Python", "SQL"]
-    },
-    {
-      category: "Frontend",
-      icon: "Layout",
-      items: ["React.js", "HTML5", "CSS3", "Tailwind CSS"]
-    },
-    {
-      category: "Backend",
-      icon: "Server",
-      items: ["Node.js", "Express.js", "REST APIs", "JWT Authentication", "Clerk"]
-    },
-    {
-      category: "Databases",
-      icon: "Database",
-      items: ["MongoDB", "MySQL"]
-    },
-    {
-      category: "Tools & Libraries",
-      icon: "Wrench",
-      items: ["Git", "GitHub", "Postman", "Cloudinary", "MongoDB Atlas", "WebSockets", "Puppeteer", "Cheerio"]
-    },
-    {
-      category: "Core Computer Science",
-      icon: "Cpu",
-      items: ["Data Structures & Algorithms", "Object-Oriented Programming (OOP)", "DBMS", "Operating Systems", "Computer Networks"]
-    }
+    { category: "Languages", icon: "Code2", items: ["Java", "JavaScript", "TypeScript", "Python", "SQL"] },
+    { category: "Frontend", icon: "Layout", items: ["React.js", "HTML5", "CSS3", "Tailwind CSS"] },
+    { category: "Backend", icon: "Server", items: ["Node.js", "Express.js", "REST APIs", "JWT Authentication", "Clerk", "Socket.IO", "Razorpay", "BullMQ", "OAuth 2.0", "Nodemailer"] },
+    { category: "Databases", icon: "Database", items: ["MongoDB", "PostgreSQL", "pgvector", "Redis", "MySQL"] },
+    { category: "Tools", icon: "Wrench", items: ["Git", "GitHub", "GitHub Actions", "Postman", "Cloudinary", "Puppeteer", "Gemini API"] },
+    { category: "Core CS", icon: "Cpu", items: ["Data Structures & Algorithms", "OOP", "DBMS", "Operating Systems", "Computer Networks"] }
   ],
 
   experience: [
@@ -62,9 +50,11 @@ export const portfolioData = {
       period: "May 2026 – July 2026",
       type: "Internship",
       description: [
-        "Developed full-stack MERN web applications with responsive React.js frontends and scalable Node.js backends.",
-        "Built secure REST APIs with JWT authentication, CRUD operations, and MongoDB database integration.",
-        "Integrated third-party services and optimized backend functionality while collaborating using Git in an Agile environment."
+        "Developed and shipped responsive, production real-estate project websites for clients (Sattva Songbird, Amolik, Embassy Verde, GuruKrupa Realcon) using React.js, Node.js, Express.js and MongoDB.",
+        "Built and maintained backend REST APIs with JWT authentication, CRUD operations and MongoDB schemas for lead capture and project data.",
+        "Debugged and resolved frontend, backend and database issues across live projects, improving stability and page responsiveness.",
+        "Integrated third-party services and worked in an Agile team using Git/GitHub for version control and code reviews.",
+        "Building PropBot Pro, an AI-powered real-estate CRM and lead-management SaaS for agencies."
       ],
       tech: ["React.js", "Node.js", "Express.js", "MongoDB", "JWT", "REST APIs", "Git"]
     }
@@ -72,69 +62,88 @@ export const portfolioData = {
 
   projects: [
     {
+      id: "propbot-pro",
+      title: "PropBot Pro",
+      tagline: "AI Real Estate CRM & Lead Management SaaS",
+      featured: true,
+      org: "PropStory",
+      flow: ["Buyer chat", "RAG pgvector", "Lead dedupe", "BullMQ", "CRM + email"],
+      description: "Multi-tenant CRM for real-estate companies with role-based access (admin, sales manager, agent) and JWT authentication.",
+      features: [
+        "AI chatbot with RAG (pgvector) answers buyer property queries from uploaded knowledge-base documents",
+        "Automated lead pipeline with deduplication through a BullMQ delivery-jobs queue, plus batched email automation with an env kill-switch",
+        "WhatsApp Business API for inbound buyer chats with AI auto-replies and human handoff",
+        "Google Calendar OAuth 2.0 sync for automatic appointment creation"
+      ],
+      tech: ["Node.js", "TypeScript", "React", "PostgreSQL", "pgvector", "BullMQ", "Redis"],
+      github: null,
+      live: null
+    },
+    {
       id: "intern-portal",
       title: "Intern Portal",
-      tagline: "Automated MERN Internship Aggregation & Application Platform",
-      featured: true,
-      description: "Full-stack MERN platform for browsing, tracking, and applying to internships. Scrapes multiple job portals automatically to aggregate live opportunities with real-time candidate engagement.",
+      tagline: "Full-Stack Internship Aggregator",
+      featured: false,
+      flow: ["Puppeteer", "Gemini parse", "Normalize", "MongoDB", "React + chat"],
+      description: "Internship aggregator with 23 REST endpoints, 5 Mongoose models and 14 responsive pages, covering auth, job discovery, saved jobs, profiles and resume upload.",
       features: [
-        "Automated internship web scraping using Puppeteer and Cheerio from multiple job portals",
-        "Secure JWT authentication & role-based access for applicants and recruiters",
-        "Real-time chat and status updates using WebSockets",
-        "Comprehensive dashboard for application tracking and applicant management"
+        "Scrapes Internshala and Unstop (up to 50 pages per run) with Puppeteer and node-cron every 12 hours, merged with live JSearch API jobs",
+        "Gemini 2.5 Flash extraction with a strict JSON schema, retry with backoff on 429s, and a guard that keeps existing data on empty runs",
+        "JWT in httpOnly cookies, bcrypt-hashed passwords, expiring OTPs and email verification via Nodemailer",
+        "Real-time Socket.IO chat with rooms and live online-user count, persisted in MongoDB"
       ],
-      tech: ["React.js", "Node.js", "Express.js", "MongoDB", "JWT", "WebSockets", "Puppeteer", "Cheerio"],
-      github: "[YOUR_GITHUB_LINK]",
-      live: "[YOUR_LIVE_DEMO_LINK]"
+      tech: ["React", "Node.js", "Express", "MongoDB", "Socket.IO", "Puppeteer", "Gemini AI"],
+      github: "https://github.com/AnkitRana456/Intern-Portal",
+      live: "https://intern-portal-o3th.vercel.app/"
+    },
+    {
+      id: "quickstay",
+      title: "QuickStay",
+      tagline: "Hotel Booking Platform",
+      featured: false,
+      flow: ["Search", "Overlap check", "Razorpay", "HMAC verify", "Booked"],
+      description: "MERN booking platform with 39 REST APIs across guest and hotel-owner flows, with role-based access control for 3 roles (user, hotel owner, admin).",
+      features: [
+        "Date-overlap availability checks with an optimistic recheck to prevent double bookings, plus a cron job that expires unpaid bookings after 15 minutes",
+        "Razorpay (test mode) with order creation, HMAC signature verification and refunds on cancellation",
+        "JWT access and refresh-token rotation with reuse detection, rate limiting, input sanitization and Helmet; found and fixed an auth bypass and a privilege-escalation issue in a self-audit",
+        "Automated tests with a GitHub Actions CI pipeline, and a frontend bundle of ~134 KB gzipped"
+      ],
+      tech: ["React", "Node.js", "Express", "MongoDB", "Clerk", "Razorpay", "Cloudinary"],
+      github: "https://github.com/AnkitRana456/hotel-booking",
+      live: "https://hotel-booking123-three.vercel.app/"
     },
     {
       id: "tripzy",
-      title: "Tripzy — Travel Booking Platform",
-      tagline: "End-to-End MERN Travel, Hotel & Reservation Platform",
-      featured: true,
-      description: "Full-stack MERN travel booking app allowing users to explore destinations, reserve hotels, book curated trips, make secure payments, and manage reservations via an intuitive dashboard.",
+      title: "Tripzy",
+      tagline: "Travel Booking Platform",
+      more: true,
+      flow: ["Explore", "Reserve", "Pay", "Confirm", "Dashboard"],
+      description: "Full-stack MERN travel booking app to explore destinations, reserve hotels, book curated trips and manage reservations.",
       features: [
-        "Comprehensive destination discovery, hotel reservation, and trip booking flows",
-        "Secure JWT auth, bcrypt password hashing, and protected route access",
-        "Integrated Payment Gateway & real-time booking status confirmations",
-        "Admin Dashboard to manage trips, hotel inventories, and user bookings",
-        "Media asset uploads managed via Cloudinary and Multer"
+        "Destination discovery, hotel reservation and trip booking flows",
+        "JWT auth, bcrypt password hashing and protected routes",
+        "Admin dashboard for trips, hotel inventory and bookings"
       ],
-      tech: ["React.js", "Vite", "React Router DOM", "Tailwind CSS", "Axios", "Zustand", "Node.js", "Express.js", "MongoDB", "Mongoose", "JWT", "bcrypt", "Cloudinary", "Multer"],
+      tech: ["React.js", "Tailwind CSS", "Zustand", "Node.js", "Express.js", "MongoDB", "Cloudinary"],
       github: "https://github.com/AnkitRana456/tripzy",
       live: "https://tripzy-xi.vercel.app/"
     },
     {
       id: "assetflow-erp",
-      title: "AssetFlow ERP — Enterprise Asset & Resource Management System",
-      tagline: "Enterprise Resource & Physical Asset Platform with AI Assistance",
-      featured: false,
-      description: "Enterprise-grade ERP platform built for the Odoo Hackathon to manage physical assets, shared resources, maintenance workflows, audit cycles, and executive analytics across organizations.",
+      title: "AssetFlow ERP",
+      tagline: "Enterprise Asset & Resource Management",
+      more: true,
+      flow: ["QR scan", "Register", "Book", "Gemini", "Reports"],
+      description: "ERP platform built for the Odoo Hackathon to manage physical assets, shared resources, maintenance workflows and audit cycles.",
       features: [
-        "QR/Barcode generation for asset registration & audit verification workflows",
-        "Resource booking (rooms/vehicles/equipment) with real-time conflict detection",
-        "AI Assistant powered by Google Gemini for natural language search & maintenance prediction",
-        "Real-time notifications via Socket.io and automated PDF/Excel report exports"
+        "QR/barcode generation for asset registration and audit verification",
+        "Resource booking with real-time conflict detection",
+        "Google Gemini assistant for natural-language search"
       ],
-      tech: ["React 19", "TailwindCSS", "shadcn/ui", "Framer Motion", "TanStack Query", "Zustand", "Recharts", "Node.js", "Express.js", "MongoDB", "JWT", "Socket.io", "Google Gemini API", "Docker"],
+      tech: ["React 19", "TailwindCSS", "Node.js", "Express.js", "MongoDB", "Socket.io", "Gemini API", "Docker"],
       github: "https://github.com/AnkitRana456/AssetFlow-ERP",
       live: null
-    },
-    {
-      id: "hotel-booking",
-      title: "Hotel Booking Platform",
-      tagline: "Full-Stack Hotel Management & Reservation System",
-      featured: false,
-      description: "Full-stack MERN hotel booking platform featuring hotel listings management, room reservations, user reviews, and administrative monitoring dashboards.",
-      features: [
-        "Seamless Clerk authentication integration for frictionless user login",
-        "Cloudinary image management for hotel property and room showcases",
-        "Interactive room availability scheduling & user review system",
-        "Clean REST API architecture backed by MongoDB Atlas"
-      ],
-      tech: ["React.js", "Node.js", "Express.js", "MongoDB", "Clerk", "Cloudinary", "Tailwind CSS"],
-      github: "[YOUR_GITHUB_LINK]",
-      live: "[YOUR_LIVE_DEMO_LINK]"
     }
   ],
 
@@ -142,23 +151,18 @@ export const portfolioData = {
     {
       title: "1500+ DSA Problems Solved",
       subtitle: "LeetCode & GeeksforGeeks",
-      description: "Demonstrated strong computational problem-solving and algorithmic mastery across arrays, trees, dynamic programming, and graphs.",
-      badge: "1500+ DSA",
-      color: "mint"
+      description: "Solved 1500+ DSA problems across LeetCode (1000+) and GeeksforGeeks."
     },
     {
       title: "LeetCode Peak Rating 1860",
-      subtitle: "Top Competitive Programmer",
-      description: "Achieved a peak contest rating of 1860 with 1000+ problems solved on LeetCode.",
-      badge: "Rating 1860",
-      color: "amber"
+      subtitle: "Contest rating",
+      description: "Peak contest rating of 1860 on LeetCode.",
+      ring: true
     },
     {
-      title: "National Hackathon Competitor",
-      subtitle: "SIH, EY, Odoo & HackWithMAIT 5.0",
-      description: "Participated in high-stakes national hackathons: Smart India Hackathon (SIH), EY Techathon, Odoo Hackathon, and HackWithMAIT 5.0.",
-      badge: "Hackathons",
-      color: "mint"
+      title: "National-Level Hackathons",
+      subtitle: "SIH, EY Techathon, Odoo, HackWithMAIT 5.0",
+      description: "Participated in Smart India Hackathon (SIH), EY Techathon, Odoo Hackathon and HackWithMAIT 5.0."
     }
   ],
 
@@ -166,26 +170,22 @@ export const portfolioData = {
     {
       institution: "Maharaja Agrasen Institute of Technology (MAIT)",
       degree: "B.Tech in Computer Science and Technology",
-      period: "Sep 2023 – June 2027",
-      grade: "CGPA 9.20 / 10",
-      location: "Delhi, India"
+      period: "Sep 2023 – June 2027 (Expected)",
+      grade: "CGPA 9.20 / 10"
     },
     {
       institution: "Karnal International School",
       degree: "Senior Secondary (Class XII)",
       period: "2023",
-      grade: "89.6%",
-      location: "Karnal, Haryana"
+      grade: "89.6%"
     }
   ],
 
   socials: [
     { name: "GitHub", url: "https://github.com/AnkitRana456", icon: "Github" },
-    { name: "LinkedIn", url: "https://linkedin.com/in/ankit-rana", icon: "Linkedin" },
-    { name: "LeetCode", url: "https://leetcode.com/AnkitRana", icon: "Code" },
-    { name: "GeeksforGeeks", url: "https://geeksforgeeks.org/user/ankitrana", icon: "Terminal" },
-    { name: "CodeChef", url: "https://codechef.com/users/ankitrana", icon: "Award" },
-    { name: "Email", url: "mailto:ankitrana210704@gmail.com", icon: "Mail" },
-    { name: "Phone", url: "tel:8814073730", icon: "Phone" }
+    { name: "LinkedIn", url: "https://www.linkedin.com/in/ankit2107/", icon: "Linkedin" },
+    { name: "LeetCode", url: "https://leetcode.com/u/Ankit_010804/", icon: "Code" },
+    { name: "GeeksforGeeks", url: "https://www.geeksforgeeks.org/profile/ankitranhtr3?tab=activity", icon: "Terminal" },
+    { name: "CodeChef", url: "https://www.codechef.com/users/ankit_rana_123", icon: "Award" }
   ]
 };

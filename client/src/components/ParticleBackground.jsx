@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 
-const SYMBOLS = ['{ }', '< >', '=>', '01', '[]', '()', ';', '&&', '||', 'MERN'];
+const SYMBOLS = ['{ }', '< >', '=>', '01', '[]', '()', ';', '&&', '||', 'git'];
 
 export default function ParticleBackground() {
   const canvasRef = useRef(null);
@@ -34,6 +34,7 @@ export default function ParticleBackground() {
 
     const render = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const accent = getComputedStyle(document.documentElement).getPropertyValue('--accent');
 
       particles.forEach((p) => {
         p.y += p.speedY;
@@ -46,7 +47,7 @@ export default function ParticleBackground() {
         }
 
         ctx.font = `${p.size}px "JetBrains Mono", monospace`;
-        ctx.fillStyle = `rgba(0, 255, 194, ${p.opacity})`;
+        ctx.fillStyle = `rgb(${accent} / ${p.opacity})`;
         ctx.fillText(p.symbol, p.x, p.y);
       });
 

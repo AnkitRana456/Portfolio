@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/fetch-activity.mjs",
     "build": "vite build",
     "lint": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "node --test src/data/terminal.test.js"
   },
   "dependencies": {
     "@react-three/drei": "^9.105.6",

@@ -1,24 +1,26 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import { portfolioData } from '../data/portfolioData';
 
 export default function Footer() {
   return (
-    <footer className="border-t border-[#1c282b] bg-[#06090a] py-8 text-xs font-mono text-[#62767d]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-        {/* Left Status */}
-        <div className="flex items-center space-x-2 text-[#00ffc2]">
-          <span className="w-2 h-2 rounded-full bg-[#00ffc2] animate-ping"></span>
-          <span>● ALL SYSTEMS OPERATIONAL</span>
-        </div>
+    <footer className="relative z-10 font-mono">
+      <div className="max-w-6xl mx-auto px-5 sm:px-8">
+        <motion.p
+          initial={{ opacity: 0, y: 14 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+          className="border-t border-[#1c2126] py-8 text-lg sm:text-2xl text-[#8a939b]"
+        >
+          <span className="text-emerald-400">✓ pipeline passed</span> · {portfolioData.stages.length} stages · deployed to:{' '}
+          <span className="text-white">you</span>
+        </motion.p>
 
-        {/* Center Code Comment Credit */}
-        <div className="text-[#8892b0] hover:text-[#00ffc2] transition-colors">
-          <span className="text-[#62767d]">// </span>
-          <span>built with React, Node, Express, MongoDB + Three.js + Framer Motion</span>
-        </div>
-
-        {/* Right Terminal Tag */}
-        <div>
-          <span className="text-[#ffb454]">© {new Date().getFullYear()} ANKIT.RANA_DEV_CONSOLE</span>
+        {/* Right padding keeps the copyright clear of the fixed duck */}
+        <div className="flex items-center justify-between gap-4 border-t border-[#1c2126] py-5 pr-24 text-[11px] text-[#6b747c]">
+          <span>⎇ main &nbsp; UTF-8</span>
+          <span>© {new Date().getFullYear()} {portfolioData.personal.name}</span>
         </div>
       </div>
     </footer>

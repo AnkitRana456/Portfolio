@@ -1,7 +1,10 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
+import React, { Suspense, lazy, useState } from 'react';
+import { motion, AnimatePresence, useSpring, useTransform } from 'framer-motion';
 import { portfolioData } from '../data/portfolioData';
+import Stage from './Stage';
 import { Terminal, Code2, Layout, Server, Database, Wrench, Cpu, Check, Filter } from 'lucide-react';
+
+const TechGlobe = lazy(() => import('./3d/TechGlobe'));
 
 const iconMap = {
   Code2: Code2,
@@ -15,8 +18,8 @@ const iconMap = {
 function SkillTiltCard({ category, items, iconName, index }) {
   const IconComponent = iconMap[iconName] || Terminal;
 
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
+  const x = useSpring(0, { stiffness: 220, damping: 22 });
+  const y = useSpring(0, { stiffness: 220, damping: 22 });
 
   const rotateX = useTransform(y, [-100, 100], [12, -12]);
   const rotateY = useTransform(x, [-100, 100], [-12, 12]);
@@ -51,18 +54,17 @@ function SkillTiltCard({ category, items, iconName, index }) {
     >
       <motion.div
         style={{ rotateX, rotateY }}
-        transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-        className="w-full h-full bg-[#111719] border border-[#1c282b] hover:border-[#00ffc2]/50 rounded-xl p-6 shadow-xl transition-colors duration-300 relative overflow-hidden group hover:shadow-[0_10px_30px_rgba(0,255,194,0.15)] transform-style-3d flex flex-col justify-between"
+        className="w-full h-full bg-[#0b0d0f] border border-[#1c2126] hover:border-accent/50 rounded-xl p-6 shadow-xl transition-colors duration-300 relative overflow-hidden group hover:shadow-[0_10px_30px_rgb(var(--accent)/0.15)] transform-style-3d flex flex-col justify-between"
       >
-        <div className="absolute top-0 right-0 w-24 h-24 bg-[#00ffc2]/5 rounded-bl-full group-hover:bg-[#00ffc2]/15 transition-all duration-300 pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-24 h-24 bg-accent/5 rounded-bl-full group-hover:bg-accent/15 transition-all duration-300 pointer-events-none"></div>
 
         <div>
           {/* Card Header */}
-          <div className="flex items-center space-x-3 mb-6 border-b border-[#1c282b] pb-4">
-            <div className="p-2.5 rounded-lg bg-[#0a0e0f] border border-[#1c282b] group-hover:border-[#00ffc2] transition-colors text-[#00ffc2]">
+          <div className="flex items-center space-x-3 mb-6 border-b border-[#1c2126] pb-4">
+            <div className="p-2.5 rounded-lg bg-[#050607] border border-[#1c2126] group-hover:border-accent transition-colors text-accent">
               <IconComponent className="w-5 h-5" />
             </div>
-            <h3 className="font-mono text-base font-bold text-white group-hover:text-[#00ffc2] transition-colors">
+            <h3 className="font-mono text-base font-bold text-white group-hover:text-accent transition-colors">
               {category}
             </h3>
           </div>
@@ -72,7 +74,7 @@ function SkillTiltCard({ category, items, iconName, index }) {
             {items.map((skill, sIdx) => (
               <span
                 key={sIdx}
-                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-md bg-[#0a0e0f] border border-[#1c282b] text-xs font-mono text-[#c3d1d5] group-hover:border-[#00ffc2]/30 hover:text-[#00ffc2] hover:bg-[#162124] transition-all"
+                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-md bg-[#050607] border border-[#1c2126] text-xs font-mono text-[#d6dadd] group-hover:border-accent/30 hover:text-accent hover:bg-[#14181b] transition-all"
               >
                 <Check className="w-3 h-3 text-[#ffb454]" />
                 <span>{skill}</span>
@@ -81,12 +83,31 @@ function SkillTiltCard({ category, items, iconName, index }) {
           </div>
         </div>
 
-        <div className="mt-6 pt-4 border-t border-[#1c282b] flex items-center justify-between text-[10px] font-mono text-[#62767d]">
-          <span>{items.length} TECHNOLOGIES</span>
-          <span className="text-[#00ffc2]">MODULE_VERIFIED</span>
+        <div className="mt-6 pt-4 border-t border-[#1c2126] flex items-center justify-between text-[10px] font-mono text-[#6b747c]">
+          <span>{items.length} packages</span>
+          <span className="text-accent">build passed</span>
         </div>
       </motion.div>
     </motion.div>
+  );
+}
+
+function Marquee({ items, direction }) {
+  return (
+    <div className="marquee-mask overflow-hidden">
+      <div className={`marquee-track flex w-max ${direction === 'left' ? 'animate-marquee-left' : 'animate-marquee-right'}`}>
+        {[...items, ...items].map((item, i) => (
+          <span
+            key={i}
+            aria-hidden={i >= items.length}
+            className="flex items-center gap-2 mr-2.5 px-3 py-1.5 rounded-md bg-[#0b0d0f] border border-[#1c2126] font-mono text-xs text-[#d6dadd] whitespace-nowrap"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+            {item}
+          </span>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -95,74 +116,59 @@ export default function Skills() {
   const [selectedCategory, setSelectedCategory] = useState('ALL');
 
   const filterOptions = ['ALL', ...skills.map((s) => s.category)];
-
-  const filteredSkills =
-    selectedCategory === 'ALL'
-      ? skills
-      : skills.filter((s) => s.category === selectedCategory);
+  const filteredSkills = selectedCategory === 'ALL' ? skills : skills.filter((s) => s.category === selectedCategory);
+  const tools = skills.filter((s) => s.category !== 'Core CS').flatMap((s) => s.items);
+  const half = Math.ceil(tools.length / 2);
 
   return (
-    <section id="skills" className="py-24 relative bg-[#06090a]/60">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="space-y-2 mb-8"
-        >
-          <div className="inline-flex items-center space-x-2 font-mono text-xs text-[#00ffc2]">
-            <Terminal className="w-3.5 h-3.5" />
-            <span>// 02. TECHNICAL_SKILLS</span>
-          </div>
-          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight font-mono">
-            Stack & <span className="text-[#00ffc2]">Tooling Matrix</span>
-          </h2>
-          <p className="text-sm text-[#8892b0] font-mono">
-            Filter categories or hover cards to engage interactive 3D perspective tilt
-          </p>
-        </motion.div>
+    <Stage id="skills" cmd="ls node_modules/.toolbox" title="The stack behind the systems.">
+      <div className="space-y-2.5 mb-10">
+        <Marquee items={tools.slice(0, half)} direction="left" />
+        <Marquee items={tools.slice(half)} direction="right" />
+      </div>
 
-        {/* Category Filter Pills */}
-        <div className="flex flex-wrap items-center gap-2 mb-10 pb-2 overflow-x-auto font-mono text-xs">
-          <div className="flex items-center space-x-1 text-[#62767d] mr-2">
-            <Filter className="w-3.5 h-3.5 text-[#00ffc2]" />
-            <span>FILTER:</span>
-          </div>
-          {filterOptions.map((category) => {
-            const isSelected = selectedCategory === category;
-            return (
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <div className="hidden lg:block lg:col-span-5 sticky top-24 h-[460px]">
+          <Suspense fallback={null}>
+            <TechGlobe />
+          </Suspense>
+          <p className="text-center font-mono text-[10px] text-[#6b747c]">drag to spin</p>
+        </div>
+
+        <div className="lg:col-span-7">
+          <div className="flex flex-wrap items-center gap-2 mb-5 font-mono text-xs">
+            <Filter className="w-3.5 h-3.5 text-accent" />
+            {filterOptions.map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-3.5 py-2 rounded-lg transition-all duration-200 cursor-pointer relative ${
-                  isSelected
-                    ? 'bg-[#00ffc2] text-[#0a0e0f] font-bold shadow-[0_0_15px_rgba(0,255,194,0.3)]'
-                    : 'bg-[#111719] border border-[#1c282b] text-[#c3d1d5] hover:border-[#00ffc2]/40 hover:text-[#00ffc2]'
+                aria-pressed={selectedCategory === category}
+                className={`px-3 py-1.5 rounded border transition-colors ${
+                  selectedCategory === category
+                    ? 'bg-accent text-[#050607] border-accent font-semibold'
+                    : 'bg-[#0b0d0f] border-[#1c2126] text-[#d6dadd] hover:border-accent/40 hover:text-accent'
                 }`}
               >
                 {category}
               </button>
-            );
-          })}
-        </div>
-
-        {/* Filterable Skill Cards Grid */}
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <AnimatePresence mode="popLayout">
-            {filteredSkills.map((skillGroup, idx) => (
-              <SkillTiltCard
-                key={skillGroup.category}
-                category={skillGroup.category}
-                items={skillGroup.items}
-                iconName={skillGroup.icon}
-                index={idx}
-              />
             ))}
-          </AnimatePresence>
-        </motion.div>
+          </div>
+
+          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <AnimatePresence>
+              {filteredSkills.map((skillGroup, idx) => (
+                <SkillTiltCard
+                  key={skillGroup.category}
+                  category={skillGroup.category}
+                  items={skillGroup.items}
+                  iconName={skillGroup.icon}
+                  index={idx}
+                />
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        </div>
       </div>
-    </section>
+    </Stage>
   );
 }
