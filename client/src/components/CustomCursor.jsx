@@ -2,19 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 const TRAIL = [
-  { stiffness: 260, size: 10, opacity: 0.45 },
-  { stiffness: 160, size: 7, opacity: 0.3 },
-  { stiffness: 100, size: 5, opacity: 0.18 }
+  { stiffness: 120, delay: 0, opacity: 0.7, size: 22 },
+  { stiffness: 70,  delay: 1, opacity: 0.45, size: 18 },
+  { stiffness: 40,  delay: 2, opacity: 0.25, size: 14 }
 ];
 
-function TrailDot({ x, y, stiffness, size, opacity }) {
-  const sx = useSpring(x, { stiffness, damping: 24, mass: 0.4 });
-  const sy = useSpring(y, { stiffness, damping: 24, mass: 0.4 });
+function TrailDot({ x, y, stiffness, opacity, size }) {
+  const sx = useSpring(x, { stiffness, damping: 24, mass: 0.5 });
+  const sy = useSpring(y, { stiffness, damping: 24, mass: 0.5 });
   return (
     <motion.span
-      style={{ x: sx, y: sy, width: size, height: size, opacity, marginLeft: -size / 2, marginTop: -size / 2 }}
-      className="fixed top-0 left-0 rounded-full bg-accent pointer-events-none z-[9998]"
-    />
+      style={{ x: sx, y: sy, opacity, fontSize: size, marginLeft: -size / 2, marginTop: -size / 2 }}
+      className="fixed top-0 left-0 pointer-events-none z-[9998] select-none"
+    >
+      🧑‍💻
+    </motion.span>
   );
 }
 
