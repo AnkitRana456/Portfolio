@@ -92,7 +92,7 @@ export default function Hero() {
   ];
 
   return (
-    <section id="hero" className="relative min-h-screen flex items-center pt-24 pb-12">
+    <section id="hero" data-label="oh — that's Ankit 👋" className="relative min-h-screen flex items-center pt-24 pb-12">
       <div className="max-w-6xl mx-auto px-5 sm:px-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
         <div className="lg:col-span-6 font-mono">
           <p {...boot(0)}>

@@ -37,7 +37,14 @@ export default function Stage({ id, cmd, title, children }) {
   const { name } = portfolioData.stages[index];
 
   return (
-    <section id={id} data-stage className="relative scroll-mt-16 py-16 sm:py-20">
+    <section id={id} data-stage data-label={({
+      about: "oh — Ankit's story",
+      experience: "oh — Ankit's work history",
+      projects: "oh — Ankit's projects",
+      skills: "oh — Ankit's tech stack",
+      log: "oh — Ankit's achievements",
+      contact: "oh — say hi to Ankit here",
+    })[id] ?? `oh — Ankit's ${id}`} className="relative scroll-mt-16 py-16 sm:py-20">
       <div className="max-w-6xl mx-auto px-5 sm:px-8">
         <div className="border-t border-[#1c2126] pt-10">
           <div className="flex items-center justify-between font-mono text-xs mb-3">
