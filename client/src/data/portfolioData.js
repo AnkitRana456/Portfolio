@@ -178,6 +178,12 @@ export const portfolioData = {
       degree: "Senior Secondary (Class XII)",
       period: "2023",
       grade: "89.6%"
+    },
+    {
+      institution: "Arya Senior Secondary School",
+      degree: "Secondary (Class X)",
+      period: "2021",
+      grade: "97.4%"
     }
   ],
 

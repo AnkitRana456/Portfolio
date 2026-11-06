@@ -1,8 +1,6 @@
-import React, { Suspense, lazy, useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useState } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { portfolioData } from '../data/portfolioData';
-
-const WorkstationCanvas = lazy(() => import('./3d/WorkstationCanvas'));
 
 const boot = (step) => ({ className: 'animate-boot-in', style: { animationDelay: `${step * 90}ms` } });
 
@@ -30,6 +28,54 @@ function useTypedRoles(roles) {
   }, [text, deleting, index, roles]);
 
   return text;
+}
+
+function PhotoCard() {
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const sx = useSpring(mx, { stiffness: 180, damping: 22 });
+  const sy = useSpring(my, { stiffness: 180, damping: 22 });
+  const rotateX = useTransform(sy, [-0.5, 0.5], [8, -8]);
+  const rotateY = useTransform(sx, [-0.5, 0.5], [-8, 8]);
+
+  const onMove = (e) => {
+    const r = e.currentTarget.getBoundingClientRect();
+    mx.set((e.clientX - r.left) / r.width - 0.5);
+    my.set((e.clientY - r.top) / r.height - 0.5);
+  };
+  const onLeave = () => { mx.set(0); my.set(0); };
+
+  return (
+    <div className="animate-boot-in lg:col-span-6" style={{ animationDelay: '270ms' }}>
+      <motion.div
+        className="perspective-1000 w-full"
+        onMouseMove={onMove}
+        onMouseLeave={onLeave}
+      >
+        <motion.div
+          style={{ rotateX, rotateY }}
+          className="rounded-xl bg-[#0b0d0f]/70 border border-[#1c2126] overflow-hidden transform-style-3d"
+        >
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-[#1c2126] font-mono text-[11px] text-[#6b747c]">
+            <span>~/me.jpg</span>
+            <span className="text-emerald-400">● online</span>
+          </div>
+          <div className="relative">
+            <img
+              src="/ankit.webp"
+              alt="Ankit Rana"
+              className="w-full object-cover object-top"
+              style={{ maxHeight: '460px' }}
+            />
+            {/* subtle accent glow overlay */}
+            <div className="absolute inset-0 pointer-events-none"
+              style={{ background: 'radial-gradient(ellipse 60% 40% at 50% 0%, rgb(var(--accent)/0.08), transparent 70%)' }}
+            />
+          </div>
+        </motion.div>
+      </motion.div>
+    </div>
+  );
 }
 
 export default function Hero() {
@@ -101,19 +147,7 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="animate-boot-in lg:col-span-6" style={{ animationDelay: '270ms' }}>
-          <div className="rounded-xl bg-[#0b0d0f]/70 border border-[#1c2126] overflow-hidden">
-            <div className="flex items-center justify-between px-4 py-2.5 border-b border-[#1c2126] font-mono text-[11px] text-[#6b747c]">
-              <span>~/workstation.glb</span>
-              <span className="text-emerald-400">● rendering</span>
-            </div>
-            <div className="h-[340px] sm:h-[420px] lg:h-[460px]">
-              <Suspense fallback={null}>
-                <WorkstationCanvas />
-              </Suspense>
-            </div>
-          </div>
-        </div>
+        <PhotoCard />
       </div>
     </section>
   );
