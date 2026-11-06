@@ -55,7 +55,7 @@ function ProjectCard({ project, wide }) {
         </div>
 
         {project.image ? (
-          <div className="relative border-b border-[#1c2126] overflow-hidden bg-[#050607]" style={{ height: wide ? '220px' : '180px' }}>
+          <div className="relative border-b border-[#1c2126] overflow-hidden bg-[#050607]" style={{ height: wide ? '300px' : '240px' }}>
             {/* browser chrome dots */}
             <div className="absolute top-0 left-0 right-0 z-10 flex items-center gap-1.5 px-3 py-2 bg-[#0b0d0f]/80 backdrop-blur-sm border-b border-[#1c2126]">
               <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
