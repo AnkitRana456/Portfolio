@@ -54,9 +54,31 @@ function ProjectCard({ project, wide }) {
           </span>
         </div>
 
-        <div className="px-4 sm:px-6 pt-3 border-b border-[#1c2126] bg-[#050607]/60 overflow-x-auto">
-          <FlowDiagram nodes={project.flow} />
-        </div>
+        {project.image ? (
+          <div className="relative border-b border-[#1c2126] overflow-hidden bg-[#050607]" style={{ height: wide ? '220px' : '180px' }}>
+            {/* browser chrome dots */}
+            <div className="absolute top-0 left-0 right-0 z-10 flex items-center gap-1.5 px-3 py-2 bg-[#0b0d0f]/80 backdrop-blur-sm border-b border-[#1c2126]">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
+              <span className="ml-2 flex-1 bg-[#1c2126] rounded px-2 py-0.5 font-mono text-[10px] text-[#6b747c] truncate">
+                {project.live || `localhost/${project.id}`}
+              </span>
+            </div>
+            <img
+              src={project.image}
+              alt={project.title}
+              className="w-full h-full object-cover object-top pt-8 transition-transform duration-700 group-hover:scale-105"
+            />
+            {/* gradient fade at bottom */}
+            <div className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none"
+              style={{ background: 'linear-gradient(to bottom, transparent, #0b0d0f)' }} />
+          </div>
+        ) : (
+          <div className="px-4 sm:px-6 pt-3 border-b border-[#1c2126] bg-[#050607]/60 overflow-x-auto">
+            <FlowDiagram nodes={project.flow} />
+          </div>
+        )}
 
         <div className="flex-1 flex flex-col p-5 sm:p-6">
           <h3 className="text-xl font-bold text-white group-hover:text-accent transition-colors">{project.title}</h3>
